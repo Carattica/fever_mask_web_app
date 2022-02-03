@@ -5,7 +5,7 @@ var userEmail;
 var userPassword;
 
 router.get('/', (req, res, next) => {
-   res.send('Welcome to the login page.');
+   res.render('login', {title: 'Login'});
 });
 
 router.post('/', (req, res, next) => {
