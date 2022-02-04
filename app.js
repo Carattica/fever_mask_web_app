@@ -9,6 +9,7 @@ var loginRouter = require('./routes/login');
 var violationsHomeRouter = require('./routes/violations_home');
 var registerRouter = require('./routes/register');
 var violationsWeeklyRouter = require('./routes/violations_weekly');
+var controlAccessRouter = require('./routes/control_access');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/login', loginRouter);
 app.use('/violations_home', violationsHomeRouter);
 app.use('/register', registerRouter);
 app.use('/violations_weekly', violationsWeeklyRouter);
+app.use('/control_access', controlAccessRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
