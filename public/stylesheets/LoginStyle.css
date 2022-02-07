@@ -24,6 +24,13 @@ body {
     padding: 20px;
 }
 
+#errorText {
+    font-size: 15px;
+    color: brown;
+    font-family: Roboto-Slab, serif;
+    text-align: center;
+    padding: 20px;
+}
 
 .loginBox {
     border-radius: 25px;

@@ -52,7 +52,7 @@ body {
 
 .nav_menu a:hover {
     background-color: white;
-    color: antiquewhite;
+    color: darkgrey;
     transition-duration: 0.2s
 }
 

@@ -16,17 +16,19 @@
 
 <div class="loginBox">
     <div class="loginInfo">
-        <label id="uname"><b>Username</b></label>
-        <label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-        </label>
+        <form action="http://localhost:3000/login" method="post">
+            <label id="uname"><b>Email</b></label><br>
+            <label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+            </label>
 
-        <label id="psw"><b>Password</b></label>
-        <label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-        </label>
+            <label id="psw"><b>Password</b></label><br>
+            <label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+            </label>
 
-        <button type="submit">Login</button>
+            <button type="submit">Login</button>
+        </form>
     </div>
     <div class="helpBox">
         <a href="register">Create Account</a>
@@ -35,6 +37,10 @@
         </p>
     </div>
     <br>
+</div>
+
+<div>
+    <h2 id="errorText"><%= errorMsg %></h2>
 </div>
 </body>
 </html>
