@@ -13,11 +13,15 @@ var app = express();
 // passport config
 require('./config/passport')(passport);
 
-// db config
+// db user config
 // connect to mongodb
-mongoose.connect(process.env.DB,{ useNewUrlParser: true ,useUnifiedTopology: true}) 
-    .then(() => console.log('Connected to the Users DB'))
-    .catch(err => console.log(err));
+// mongoose.connect(process.env.USER_DB, {useNewUrlParser: true, useUnifiedTopology: true}) 
+//   .then(() => console.log('Connected to the Users DB'))
+//   .catch(err => console.log(err));
+
+// mongoose.connect(process.env.VIOL_DB, {useNewUrlParser: true, useUnifiedTopology: true})
+//   .then(()=> console.log('Connected to the Violations DB'))
+//   .catch(err => console.log(err));
 
 // view engine setup
 app.use(express.static(__dirname + '/public'));
@@ -39,6 +43,7 @@ app.use(passport.session());
 // integrating the router files and sending paths
 app.use('/', require('./routes/index.js'));
 app.use('/', require('./routes/users.js'));
+// app.use('/', require('./routes/violations.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
