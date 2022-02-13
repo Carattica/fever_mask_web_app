@@ -11,6 +11,7 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 router.get('/violations_weekly', ensureAuthenticated, (req, res) => res.render('violations_weekly'));
 router.get('/violations_home', ensureAuthenticated, (req, res) => res.render('violations_home'));
+router.use('/violations_home', ensureAuthenticated, require('./violations'));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
 
 // user registration
