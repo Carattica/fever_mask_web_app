@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= title %></title>
+    <title>Violation System</title>
     <link rel="stylesheet" href="/stylesheets/NewAccountStyle.css"/>
 </head>
 <body>
@@ -17,34 +17,24 @@
 <div class="InfoBox">
     <div class="UserInfo">
         <form action="http://localhost:3000/register" method="post">
-            <label id="firstname"><b>Firstname</b></label><br>
+            <label id="name"><b>Name</b></label><br>
             <label>
-                <input type="text" placeholder="Enter Firstname" name="fname" required>
-            </label><br>
-
-            <label id="lastname"><b>Lastname</b></label><br>
-            <label>
-                <input type="text" placeholder="Enter Lastname" name="lname" required>
+                <input type="text" autocomplete="off" placeholder="Enter Name" name="name" required>
             </label><br>
 
             <label id="email"><b>Email</b></label><br>
             <label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-            </label><br>
-
-            <label id="username"><b>Username</b></label><br>
-            <label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                <input type="text" autocomplete="off" placeholder="Enter Email" name="email" required>
             </label><br>
 
             <label id="password"><b>Password</b></label><br>
             <label>
-                <input type="text" placeholder="Enter Password" name="psw" required>
+                <input type="password" placeholder="Enter Password" name="password" required>
             </label><br>
 
-            <label id="retypepass"><b>Retype Password</b></label><br>
+            <label id="password2"><b>Retype Password</b></label><br>
             <label>
-                <input type="text" placeholder="Re-Enter Password" name="repsw" required>
+                <input type="password" placeholder="Re-Enter Password" name="password2" required>
             </label><br>
 
             <button type="Enter">Register</button>
@@ -52,6 +42,11 @@
     </div>
     <br>
 </div>
+
+<script type="text/javascript">
+    var error = '<%= error %>';
+    if(error) alert(error);
+</script>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= title %></title>
+    <title>Violation System</title>
     <link rel="stylesheet" href="/stylesheets/LoginStyle.css"/>
 </head>
 <body>
@@ -17,30 +17,27 @@
 <div class="loginBox">
     <div class="loginInfo">
         <form action="http://localhost:3000/login" method="post">
-            <label id="uname"><b>Email</b></label><br>
+            <label id="email"><b>Email</b></label><br>
             <label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-            </label>
+                <input type="text" autocomplete="off" placeholder="Enter Email" name="email" required>
+            </label><br>
 
             <label id="psw"><b>Password</b></label><br>
             <label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-            </label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+            </label><br>
 
             <button type="submit">Login</button>
         </form>
     </div>
     <div class="helpBox">
-        <a href="register">Create Account</a>
+        <a href="http://localhost:3000/register">Create Account</a>
         <p>
-            <i>*Please note that new users will need to be approved before able to login*</i>
+            <i>*Please note that new users will need to be approved before able to log in*</i>
         </p>
     </div>
     <br>
 </div>
 
-<div>
-    <h2 id="errorText"><%= errorMsg %></h2>
-</div>
 </body>
 </html>

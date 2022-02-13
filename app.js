@@ -2,59 +2,42 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-// var mongoose = require('mongoose');
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
-//
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/node-auth')
-//     .then(() => console.log('Mongoose Conected.'))
-//     .catch((err) => console.error(err));
-
-// getting the router files
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
-var violationsHomeRouter = require('./routes/violations_home');
-var registerRouter = require('./routes/register');
-var violationsWeeklyRouter = require('./routes/violations_weekly');
-var controlAccessRouter = require('./routes/control_access');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
 
 var app = express();
 
+// passport config
+require('./config/passport')(passport);
+
+// db config
+// connect to mongodb
+mongoose.connect(process.env.DB,{ useNewUrlParser: true ,useUnifiedTopology: true})
+    .then(() => console.log('Connected to the Users DB'))
+    .catch(err => console.log(err));
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // middleware
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// express session
+app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // integrating the router files and sending paths
-app.use('/', indexRouter);
-app.use('/login', loginRouter);
-app.use('/violations_home', violationsHomeRouter);
-app.use('/register', registerRouter);
-app.use('/violations_weekly', violationsWeeklyRouter);
-app.use('/control_access', controlAccessRouter);
-
-// // init passport and express-session
-// app.use(require('express-session')({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: false
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-// // passport config
-// var User = require('./models/User');
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+app.use('/', require('./routes/index.js'));
+app.use('/', require('./routes/users.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= title %></title>
+    <title>Violation System</title>
     <link rel="stylesheet" href="/stylesheets/ControlStyle.css"/>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 <body>
 <div class="PSU">
@@ -12,10 +17,10 @@
 
 <div id="nav">
     <section class="nav_menu" id="navsec">
-        <a href="violations_home">View Violations</a>
-        <a href="violations_weekly">View Report</a>
-        <a href="control_access" class="nav_page">Control Access</a>
-        <a>Logout</a>
+        <a href="http://localhost:3000/violations_home">View Violations</a>
+        <a href="http://localhost:3000/violations_weekly">View Report</a>
+        <a href="http://localhost:3000/control_access" class="nav_page">Control Access</a>
+        <a href="http://localhost:3000/logout">Logout</a>
     </section>
 </div>
 
