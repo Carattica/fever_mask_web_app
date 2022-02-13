@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -14,7 +15,7 @@ require('./config/passport')(passport);
 
 // db config
 // connect to mongodb
-mongoose.connect(process.env.DB,{ useNewUrlParser: true ,useUnifiedTopology: true})
+mongoose.connect(process.env.DB,{ useNewUrlParser: true ,useUnifiedTopology: true}) 
     .then(() => console.log('Connected to the Users DB'))
     .catch(err => console.log(err));
 
@@ -56,3 +57,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+// to run the app: npm start
