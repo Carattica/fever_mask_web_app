@@ -10,8 +10,6 @@ const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 router.get('/violations_weekly', ensureAuthenticated, (req, res) => res.render('violations_weekly'));
-router.get('/violations_home', ensureAuthenticated, (req, res) => res.render('violations_home'));
-router.use('/violations_home', ensureAuthenticated, require('./violations'));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
 
 // user registration
@@ -43,7 +41,7 @@ router.post('/register', (req, res) => {
     else {
         User.findOne({email: email}).then(user => {
             if (user) {  // if email already exists
-                res.render('register', {error: 'An account with that email already exists.'})
+                res.render('register', {error: 'An account with that email already exists.'});
             }
             else {  // if all registration conditions are met, create the user in the database and have them log in
                 const newUser = new User({name, email, password});  // create the new user in the DB

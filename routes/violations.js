@@ -13,15 +13,15 @@ router.get('/violations_weekly', ensureAuthenticated, (req, res) => res.render('
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
 
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
-    Violation.findOne({'mask': violationType}).then(violation => {
+    Violation.findOne({violationType: 'mask'}).then(violation => {
         if (violation) {
-            console.log(violation);
+            res.render('violations_home', {vio: violation['violationType'], img: violation['imageUrl']});
         }
         else {
-            console.log('nothing');
+            console.log('Error fetching violations from Violations Database.');
+            res.redirect('/login');
         }
     });
-    res.render('violations_home')
 });
 
 module.exports = router;
