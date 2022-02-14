@@ -43,6 +43,7 @@ app.use(passport.session());
 // integrating the router files and sending paths
 app.use('/', require('./routes/index.js'));
 app.use('/', require('./routes/users.js'));
+app.use('/', require('./routes/violations.js'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
