@@ -19,9 +19,8 @@ router.get('/violations_home', ensureAuthenticated, (req, res) => {
             // get this loop to EJS side to display in HTML list
             console.log('VIOLATIONS FOUND:');
             for (let i = 0; i < violation.length; i++) {
-                console.log(violation[i]['violationType'], violation[i]['imageUrl']);
+                console.log(violation[i]['violationType'], violation[i]['imageUrl'], violation[i]['time'], violation[i]['date'], violation[i]['location']);
             }
-            // res.render('violations_home', {vio: violation[1]['violationType'], img: violation[1]['imageUrl']});
             res.render('violations_home', {vios: violation});
         }
         else {

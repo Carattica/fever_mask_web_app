@@ -13,16 +13,6 @@ var app = express();
 // passport config
 require('./config/passport')(passport);
 
-// db user config
-// connect to mongodb
-// mongoose.connect(process.env.USER_DB, {useNewUrlParser: true, useUnifiedTopology: true}) 
-//   .then(() => console.log('Connected to the Users DB'))
-//   .catch(err => console.log(err));
-
-// mongoose.connect(process.env.VIOL_DB, {useNewUrlParser: true, useUnifiedTopology: true})
-//   .then(()=> console.log('Connected to the Violations DB'))
-//   .catch(err => console.log(err));
-
 // view engine setup
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
@@ -64,3 +54,4 @@ app.use((err, req, res, next) => {
 module.exports = app;
 
 // to run the app: npm start
+// MongoDB password: SeniorDesign11!

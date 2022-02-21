@@ -3,13 +3,19 @@ body {
     margin: 0;
 }
 
-.container {
+#container {
     display: grid;
+    grid-gap: 5px;
+    box-sizing: border-box;
+    height: 200px;
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(auto-fill, 120px);
-    grid-row-gap: .5em;
-    grid-column-gap: 1em;
+    background-color: white;
+    padding: 10px;
+}
+
+#container > div {
+    background-color: white;
+    padding: 5px;
 }
 
 .PSU {

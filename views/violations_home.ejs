@@ -24,11 +24,11 @@
     </section>
 </div>
 
-<div class="container">
+<div id="container">
     <div>
         <% for (var i in vios) { %>
-            <p><%= vios[i].violationType%></p>
-            <img src="<%= vios[i].imageUrl %>">
+            <p><%= vios[i].violationType %> | <%= vios[i].time %> | <%= vios[i].date %> | <%= vios[i].location %></p>
+            <img src="<%= vios[i].imageUrl %>" alt="*Violation Image*" width="75" height="75">
             <br>
         <% } %>
     </div>

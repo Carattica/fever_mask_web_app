@@ -15,17 +15,28 @@ router.get('/control_access', ensureAuthenticated, (req, res) => res.render('con
 // user registration
 router.post('/register', (req, res) => {
     const {name, email, password, password2} = req.body;
+
     // variable for posting error messages in an alert
-    // criteria for meeting password rules
-    // ensuring the email is of PSU domain
     var error;
+
+    // password criteria
     var criteria = new RegExp(
         "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[_!@#$%&?]).+$"
     );
+
+    // password validation helper functions
     const validPsuEmail = (str, psuEdu) => {
         return str.indexOf(psuEdu, str.length - psuEdu.length) !== -1;
     }
+    function doubleAt(str, count = 0) {
+        for (var i = 0; i < str.length - 1; i++) {
+            if (str[i] === '@') count++;
+        }
+        if (count > 1) return true;
+        else return false;
+    }
 
+    // ensuring the email is in correct format
     // ensuring the email is a PSU email
     // password must match
     // passwords must contain a capital letter, a number, and a symbol while having a length of at least 8 characters
@@ -33,6 +44,10 @@ router.post('/register', (req, res) => {
     if (!criteria.test(password))  error = 'Password must contain at least one special character: _!@#$%&?';
     if (password.length < 8)  error = 'Password must be at least 8 characters in length.';
     if (!validPsuEmail(email, '@psu.edu')) error = 'The email must be a Penn State email.';
+    if (doubleAt(email)) error = 'Invalid email format';
+
+    // checking if the name field is empty
+    if (!name) error = 'You must enter a name.';
 
     // render the page with an error message if there is one
     if (error) res.render('register', {error: error});
