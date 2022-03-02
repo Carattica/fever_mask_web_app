@@ -4,15 +4,13 @@ var selenium = require('selenium-webdriver');
 var browser = new selenium.Builder();
 var browserTab = browser.forBrowser('chrome').build();
 
+const URL = 'http://localhost:3000/login';
+
 // test user credentials
-var email = 'tester@psu.edu';
+var unregisteredEmail = 'fake@psu.edu';
 var password = 'Testing11!';
 
-var unregisteredEmail = 'fake@psu.edu';
-
-var tabToOpen = browserTab.get('http://localhost:3000/login');
-
-tabToOpen.then(() => {
+browserTab.get(URL).then(() => {
     var findTimeOutP = browserTab.manage().setTimeouts({
         implicit: 10000,  // set timeout to 10 seconds
     });
@@ -47,11 +45,16 @@ tabToOpen.then(() => {
     return clickButton;
 })
 .then(() => {
-    console.log(browserTab.getCurrentUrl());
-    if (browserTab.getCurrentUrl() === 'http://localhost:3000/login') {
-        console.log('Login blocked.');
+    return browserTab.getCurrentUrl();
+})
+.then((currentUrl) => {
+    if (currentUrl === URL) {
+        console.log('TEST PASS: Invalid login blocked.');
+    }
+    else if (currentUrl === 'http://localhost:3000/violations_home') {
+        console.log('TEST FAIL: Invalid login allowed.');
     }
     else {
-        console.log('Successful login.');
+        console.log('TEST FAIL: Nothing resolved.');
     }
 });
