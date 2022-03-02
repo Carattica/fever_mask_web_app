@@ -8,7 +8,10 @@ var browserTab = browser.forBrowser('chrome').build();
 var email = 'tester@psu.edu';
 var password = 'Testing11!';
 
+var unregisteredEmail = 'fake@psu.edu';
+
 var tabToOpen = browserTab.get('http://localhost:3000/login');
+
 tabToOpen.then(() => {
     var findTimeOutP = browserTab.manage().setTimeouts({
         implicit: 10000,  // set timeout to 10 seconds
@@ -20,7 +23,7 @@ tabToOpen.then(() => {
     return emailInput;
 })
 .then((emailInput) => {
-    var fillEmail = emailInput.sendKeys(email);
+    var fillEmail = emailInput.sendKeys(unregisteredEmail);
     return fillEmail;
 })
 .then(() => {
@@ -44,8 +47,11 @@ tabToOpen.then(() => {
     return clickButton;
 })
 .then(() => {
-    console.log('Log in success.');
-})
-.catch((err) => {
-    console.log(`Error ${err}.`);
-})
+    console.log(browserTab.getCurrentUrl());
+    if (browserTab.getCurrentUrl() === 'http://localhost:3000/login') {
+        console.log('Login blocked.');
+    }
+    else {
+        console.log('Successful login.');
+    }
+});
