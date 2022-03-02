@@ -8,6 +8,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
+    "chromedriver": "^98.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
@@ -20,6 +21,7 @@
     "morgan": "~1.9.1",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.1.0"
+    "passport-local-mongoose": "^6.1.0",
+    "selenium-webdriver": "^4.1.1"
   }
 }
