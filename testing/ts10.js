@@ -11,7 +11,6 @@ var testsPassed = 0;
 // test user credentials
 var name = 'John Doe';
 var email = 'tester2@psu.edu';
-var password = 'Testing11!';
 
 async function ts10() {
     // TS-10-001:  Mismatching Passwords Registration Attempt
