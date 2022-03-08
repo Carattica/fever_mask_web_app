@@ -12,7 +12,7 @@ router.get('/control_access', ensureAuthenticated, (req, res) => res.render('con
 
 // time, date, location, type of offense
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
-    Violation.find({}).then(violation => {
+    Violation.find({}).sort({'date': 1}).sort({'time': 1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
             console.log('VIOLATIONS FOUND:');

@@ -25,8 +25,8 @@
 </div>
 
 <script>
-    function myFunction(time, date, loc, img) {
-        var infoStr = `${time}, ${date}, ${loc}`;
+    function myFunction(time, date, loc, type, img) {
+        var infoStr = `${time} | ${date} | ${loc} | ${type}`;
         document.getElementById('vioInfo').innerHTML = infoStr;
         document.getElementById('vioImg').src = img;
     }
@@ -40,7 +40,7 @@
       </div>
       <div class="LeftContent">
         <% for (var i in vios) { %>
-            <button type="button" class="collapsible" onclick="return myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
+            <button type="button" class="collapsible" onclick="return myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
         <% } %>
       </div>
     </div>
