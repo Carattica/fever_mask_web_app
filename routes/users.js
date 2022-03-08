@@ -9,7 +9,6 @@ const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 // makes sure user is authenticated with each request before redirecting
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
-router.get('/violations_weekly', ensureAuthenticated, (req, res) => res.render('violations_weekly'));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
 
 // user registration
