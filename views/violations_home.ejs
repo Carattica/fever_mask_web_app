@@ -24,6 +24,10 @@
     </section>
 </div>
 
+<div>
+    <p class="noticeText">Showing All Captured Violations</p>
+</div>
+
 <script>
     function myFunction(time, date, loc, type, img) {
         var infoStr = `${time} | ${date} | ${loc} | ${type}`;
@@ -40,7 +44,7 @@
       </div>
       <div class="LeftContent">
         <% for (var i in vios) { %>
-            <button type="button" class="collapsible" onclick="return myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
+            <button type="button" class="btn" onclick="return myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
         <% } %>
       </div>
     </div>

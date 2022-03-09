@@ -24,6 +24,13 @@ body {
     padding: 20px;
 }
 
+.noticeText {
+    font-size: 20px;
+    color: #041E42;
+    font-family: Roboto-Slab, serif;
+    text-align: center;
+    padding: 5px;
+}
 
 #navsec {
     background-color: #041E42;
