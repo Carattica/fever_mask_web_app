@@ -7,9 +7,21 @@ const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 
 // routes to various pages in the web app
 // makes sure user is authenticated with each request before redirecting
-router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+router.get('/login', forwardAuthenticated, (req, res) => res.render('login', {error: ''}));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
-router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
+
+router.get('/control_access', ensureAuthenticated, (req, res) => {
+    User.findOne({_id: req.session.passport.user}).then(user => {
+        var usrRole;
+        if (user.role === 'developer') {
+            usrRole = 'You may control this page.';
+        }
+        else {
+            usrRole = 'You do not have access.';
+        }
+        res.render('control_access', {status: usrRole});
+    });
+});
 
 // user registration
 router.post('/register', (req, res) => {
@@ -58,7 +70,9 @@ router.post('/register', (req, res) => {
                 res.render('register', {error: 'An account with that email already exists.'});
             }
             else {  // if all registration conditions are met, create the user in the database and have them log in
-                const newUser = new User({name, email, password});  // create the new user in the DB
+                // const role = 'administrator';
+                const role = 'undetermined';
+                const newUser = new User({name, email, password, role});  // create the new user in the DB
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {  // encrypt the user's password
                         if (err) throw err;
@@ -74,7 +88,14 @@ router.post('/register', (req, res) => {
 // successful login takes user to violations
 // failed login keeps user at login page
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {successRedirect: '/violations_home', failureRedirect: '/login'})(req, res, next);
+    User.findOne({email: req.body.email}).then(user => {
+        if (user.role === 'undetermined') {
+            res.render('login', {error: 'You have not been granted permissions yet.'});
+        }
+        else {
+            passport.authenticate('local', {successRedirect: '/violations_home', failureRedirect: '/login'})(req, res, next);
+        }
+    });
 });
 
 // log the user out and return to login page

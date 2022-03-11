@@ -14,11 +14,8 @@ router.get('/violations_home', ensureAuthenticated, (req, res) => {
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
-            console.log('VIOLATIONS FOUND:');
-            for (let i = 0; i < violation.length; i++) {
-                console.log('>', violation[i]['violationType'], violation[i]['imageUrl'], violation[i]['time'], violation[i]['date'], violation[i]['location']);
-            }
-            res.render('violations_home', {vios: violation});
+            console.log(`${violation.length} VIOLATIONS FOUND`);
+            res.render('violations_home', {vios: violation, vioNum: violation.length});
         }
         else {
             console.log('Error fetching violations from Violations Database.');
@@ -34,23 +31,10 @@ function dateToString(date) {
     return mm + '-' + dd + '-' + yyyy;
 }
 
-/*
-1. go to weekly report page
-2. check to see if sunday (function)
-3. if it is, calculate the dates and query between the two (function)
-4. hold new data in a list
-5.. else, just hold the previous week's stuff up there from previous list
-    > find num of current day of week (n)
-    > use it to calculate LAST weeks day ranges and just display those (today - 7+n, today - n]
-    > this will act as the 'storage' of previous week when update not ready
-
-*/
-
 router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
-
     var today = new Date();
 
-    if (today.getDay() == 0) {  // Sunday, get last week
+    if (today.getDay() == 0) {  // Sunday, get latest week
         var upperLimit = new Date();  // for querying less than
         var dayBefore = new Date();  // just for date reading, not querying
         dayBefore.setDate(upperLimit.getDate() - 1);
@@ -74,10 +58,7 @@ router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
     Violation.find({'date': {$gte: dateToString(lowerLimit), $lt: dateToString(upperLimit)}}).sort({'date': 1}).sort({'time': 1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
-            console.log('VIOLATIONS FOUND:');
-            for (let i = 0; i < violation.length; i++) {
-                console.log('>', violation[i]['violationType'], violation[i]['imageUrl'], violation[i]['time'], violation[i]['date'], violation[i]['location']);
-            }
+            console.log(`${violation.length} VIOLATIONS FOUND`);
             res.render('violations_weekly', {vios: violation, lower: dateToString(lowerLimit), upper: dateToString(dayBefore)});
         }
         else {
