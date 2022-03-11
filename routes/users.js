@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
+router.use(express.json());
 
 // routes to various pages in the web app
 // makes sure user is authenticated with each request before redirecting
@@ -14,13 +15,37 @@ router.get('/control_access', ensureAuthenticated, (req, res) => {
     User.findOne({_id: req.session.passport.user}).then(user => {
         var usrRole;
         if (user.role === 'developer') {
-            usrRole = 'You may control this page.';
+            usrRole = 'Displaying All Users Who Have Registered For System Access';
+            User.find({role: 'undetermined'}).then(reqUsers => {
+                res.render('control_access', {status: usrRole, users: reqUsers});
+            });
         }
         else {
-            usrRole = 'You do not have access.';
+            usrRole = 'You Do Not Have Permission To Control This Page';
+            res.render('control_access', {status: usrRole, users: ''})
         }
-        res.render('control_access', {status: usrRole});
     });
+});
+
+// POST REQUEST FOR CONTROL ACCESS
+router.post('/control_access', (req, res) => {
+    const email = Object.keys(req.body).toString();
+    const role = req.body[email];
+
+    User.findOne({email: email}).then(user => {
+        if (role === 'Administrator' || role === 'Developer') {
+            console.log(`Change ${email}'s role to ${role}`);
+            // add update code
+            // send email
+        }
+        else {
+            console.log(`Deny access to ${email}.`);
+            // add deletion code
+            // send email
+        }
+    });
+
+    res.redirect('/control_access');
 });
 
 // user registration

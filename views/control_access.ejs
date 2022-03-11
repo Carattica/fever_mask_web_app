@@ -24,7 +24,30 @@
     </section>
 </div>
 
-<p><%= status %></p>
+<div>
+    <p class="noticeText"><%= status %></p>
+</div>
+
+<script>
+    function radioUser(index) {
+        return 'user' + index.toString();
+    }
+</script>
+
+<div>
+    <% for (var i in users) { %>
+        <p><%= users[i].name %> | <%= users[i].email %></p>
+        <form action="http://localhost:3000/control_access" method="post">
+            <input type="radio" id="<%= users[i].email %>" name="<%= users[i].email %>" value="Developer">
+            <label for="user1">Developer</label><br>
+            <input type="radio" id="<%= users[i].email %>" name="<%= users[i].email %>" value="Administrator">
+            <label for="user1">Administrator</label><br>
+            <input type="radio" id="<%= users[i].email %>" name="<%= users[i].email %>" value="Reject">
+            <label for="user1">Reject</label><br>
+            <button id="submitButton" type="submit">Submit</button>
+        </form>
+    <% } %>
+</div>
 
 </body>
 </html>

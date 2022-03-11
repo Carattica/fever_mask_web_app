@@ -63,3 +63,24 @@ body {
 .nav_items:hover {
     background-color: white;
 }
+
+.noticeText {
+    font-size: 20px;
+    color: #041E42;
+    font-family: Roboto-Slab, serif;
+    text-align: center;
+    padding: 5px;
+}
+
+.btn {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    padding: 40px;
+    margin: 10px;
+    grid-auto-rows: auto;
+    display: grid;
+    width: 50%;
+  }

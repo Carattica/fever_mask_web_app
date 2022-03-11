@@ -7,14 +7,14 @@ const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 // makes sure user is authenticated with each request before redirecting
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
-router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access'));
+router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access', {status: '', users: ''}));
 
 // get all violations and sort by date, time
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
-            console.log(`${violation.length} VIOLATIONS FOUND`);
+            console.log(`> ${violation.length} VIOLATIONS FOUND`);
             res.render('violations_home', {vios: violation, vioNum: violation.length});
         }
         else {
@@ -58,7 +58,7 @@ router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
     Violation.find({'date': {$gte: dateToString(lowerLimit), $lt: dateToString(upperLimit)}}).sort({'date': 1}).sort({'time': 1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
-            console.log(`${violation.length} VIOLATIONS FOUND`);
+            console.log(`> ${violation.length} VIOLATIONS FOUND`);
             res.render('violations_weekly', {vios: violation, lower: dateToString(lowerLimit), upper: dateToString(dayBefore)});
         }
         else {
