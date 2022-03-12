@@ -2,32 +2,28 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const nodemailer = require('nodemailer');
+const emailUser = require('../config/mailer');
 const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 const { findByIdAndUpdate, findOneAndDelete } = require('../models/User');
 
-function emailUser(email, title, message) {
-    var transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth:{
-            user: 'SeniorDesignTeam11PSU@gmail.com',
-            pass: 'SeniorDesign11!'
+// check if it is time to send the Weekly Report
+// Sunday 8:00 PM
+var weeklyReportTime = new Date();
+if (weeklyReportTime.getDay() == 0 && weeklyReportTime.getHours() == 20) {
+    console.log('> Sending the Weekly Report email notifications...');
+    User.find({}).then(user => {
+        if (user) {
+            var allEmails = '';
+            for (i in user) {
+                allEmails += user[i].email.toString() + ', '
+            }
+            allEmails = allEmails.slice(0, -2);
+            emailUser(allEmails, 'Weekly Report: Fever Mask Mandate System', 'The Weekly Report is updated and ready to view.');
         }
-    });
-    
-    var mailOptions = {
-        from: 'SeniorDesignTeam11PSU@gmail.com',
-        to: email,
-        subject: title,
-        text: message
-    }
-    
-    transporter.sendMail(mailOptions, (err, info) => {
-        if (err) console.log(err)
-        else console.log('> Email has been sent.');
+        else {
+            console.log('Error fetching users from Users Database.');
+        }
     });
 }
 
@@ -36,23 +32,31 @@ function emailUser(email, title, message) {
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login', {error: ''}));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 
+// displays current users awaiting access
 router.get('/control_access', ensureAuthenticated, (req, res) => {
     User.findOne({_id: req.session.passport.user}).then(user => {
-        var usrRole;
-        if (user.role === 'Developer') {
-            usrRole = 'Displaying All Users Who Have Registered For System Access';
-            User.find({role: 'Undetermined'}).then(reqUsers => {
-                res.render('control_access', {status: usrRole, users: reqUsers});
-            });
+        if (user) {
+            var usrRole;
+            if (user.role === 'Developer') {
+                usrRole = 'Displaying All Users Who Have Registered For System Access';
+                User.find({role: 'Undetermined'}).then(reqUsers => {
+                    res.render('control_access', {status: usrRole, users: reqUsers});
+                });
+            }
+            else {
+                usrRole = 'You Do Not Have Permission To Control This Page';
+                res.render('control_access', {status: usrRole, users: ''})
+            }
         }
         else {
-            usrRole = 'You Do Not Have Permission To Control This Page';
-            res.render('control_access', {status: usrRole, users: ''})
+            console.log('Error fetching users from Users Database.');
+            res.redirect('/violations_home');
         }
+        
     });
 });
 
-// post request for control access
+// handles what happens after developer changes user access role
 router.post('/control_access', (req, res) => {
     const email = Object.keys(req.body).toString();
     const role = req.body[email];
@@ -139,11 +143,17 @@ router.post('/register', (req, res) => {
 // failed login keeps user at login page
 router.post('/login', (req, res, next) => {
     User.findOne({email: req.body.email}).then(user => {
-        if (user.role === 'Undetermined') {
-            res.render('login', {error: 'You have not been granted permissions yet.'});
+        if (user) {
+            if (user.role === 'Undetermined') {
+                res.render('login', {error: 'You have not been granted permissions yet.'});
+            }
+            else {
+                passport.authenticate('local', {successRedirect: '/violations_home', failureRedirect: '/login'})(req, res, next);
+            }
         }
         else {
-            passport.authenticate('local', {successRedirect: '/violations_home', failureRedirect: '/login'})(req, res, next);
+            console.log('Error fetching users from Users Database.');
+            res.redirect('/login');
         }
     });
 });
