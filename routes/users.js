@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
+const { findByIdAndUpdate, findOneAndDelete } = require('../models/User');
 router.use(express.json());
 
 // routes to various pages in the web app
@@ -14,9 +15,9 @@ router.get('/register', forwardAuthenticated, (req, res) => res.render('register
 router.get('/control_access', ensureAuthenticated, (req, res) => {
     User.findOne({_id: req.session.passport.user}).then(user => {
         var usrRole;
-        if (user.role === 'developer') {
+        if (user.role === 'Developer') {
             usrRole = 'Displaying All Users Who Have Registered For System Access';
-            User.find({role: 'undetermined'}).then(reqUsers => {
+            User.find({role: 'Undetermined'}).then(reqUsers => {
                 res.render('control_access', {status: usrRole, users: reqUsers});
             });
         }
@@ -32,18 +33,18 @@ router.post('/control_access', (req, res) => {
     const email = Object.keys(req.body).toString();
     const role = req.body[email];
 
-    User.findOne({email: email}).then(user => {
-        if (role === 'Administrator' || role === 'Developer') {
-            console.log(`Change ${email}'s role to ${role}`);
-            // add update code
-            // send email
-        }
-        else {
-            console.log(`Deny access to ${email}.`);
-            // add deletion code
-            // send email
-        }
-    });
+    if (role === 'Administrator' || role === 'Developer') {
+        User.findOneAndUpdate({email: email}, {role: role}).then(() => {
+            console.log(`> ${role} permission granted to ${email}`);
+        });
+        // SEND EMAIL
+    }
+    else {
+        User.findOneAndDelete({email: email}).then(() => {
+            console.log(`> Website access denied to ${email}`);
+        });
+        // SEND EMAIL
+    }
 
     res.redirect('/control_access');
 });
@@ -114,7 +115,7 @@ router.post('/register', (req, res) => {
 // failed login keeps user at login page
 router.post('/login', (req, res, next) => {
     User.findOne({email: req.body.email}).then(user => {
-        if (user.role === 'undetermined') {
+        if (user.role === 'Undetermined') {
             res.render('login', {error: 'You have not been granted permissions yet.'});
         }
         else {
