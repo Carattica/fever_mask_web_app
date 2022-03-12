@@ -2,10 +2,34 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 const { findByIdAndUpdate, findOneAndDelete } = require('../models/User');
-router.use(express.json());
+
+function emailUser(email, title, message) {
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth:{
+            user: 'SeniorDesignTeam11PSU@gmail.com',
+            pass: 'SeniorDesign11!'
+        }
+    });
+    
+    var mailOptions = {
+        from: 'SeniorDesignTeam11PSU@gmail.com',
+        to: email,
+        subject: title,
+        text: message
+    }
+    
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) console.log(err)
+        else console.log('> Email has been sent.');
+    });
+}
 
 // routes to various pages in the web app
 // makes sure user is authenticated with each request before redirecting
@@ -28,7 +52,7 @@ router.get('/control_access', ensureAuthenticated, (req, res) => {
     });
 });
 
-// POST REQUEST FOR CONTROL ACCESS
+// post request for control access
 router.post('/control_access', (req, res) => {
     const email = Object.keys(req.body).toString();
     const role = req.body[email];
@@ -37,13 +61,13 @@ router.post('/control_access', (req, res) => {
         User.findOneAndUpdate({email: email}, {role: role}).then(() => {
             console.log(`> ${role} permission granted to ${email}`);
         });
-        // SEND EMAIL
+        emailUser(email, 'Access Granted', `You have been granted ${role} permissions to the Fever and Mask Mandate System website. You may now log in.`);
     }
     else {
         User.findOneAndDelete({email: email}).then(() => {
             console.log(`> Website access denied to ${email}`);
         });
-        // SEND EMAIL
+        emailUser(email, 'Access Denied', `You have been denied permissions to the Fever and Mask Mandate System website. No further action needed.`);
     }
 
     res.redirect('/control_access');
@@ -97,7 +121,7 @@ router.post('/register', (req, res) => {
             }
             else {  // if all registration conditions are met, create the user in the database and have them log in
                 // const role = 'administrator';
-                const role = 'undetermined';
+                const role = 'Undetermined';
                 const newUser = new User({name, email, password, role});  // create the new user in the DB
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {  // encrypt the user's password
