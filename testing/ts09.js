@@ -14,7 +14,7 @@ var name = 'John Doe';
 var password = 'Testing11!';
 
 async function ts09() {
-    // TS-09-001: Two @ Sign Email Registration Attempt
+    // TC-09-001: Two @ Sign Email Registration Attempt
     await browserTab.get(LOGIN_URL);
 
     var registerLink = await browserTab.findElement(selenium.By.linkText('Create Account'));
@@ -53,7 +53,7 @@ async function ts09() {
 
     await browserTab.close();
 
-    // TS-09-002: Non-PSU Domain Email Registration Attempt
+    // TC-09-002: Non-PSU Domain Email Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 
@@ -93,7 +93,7 @@ async function ts09() {
 
     await browserTab.close();
 
-    // TS-09-003: Already Registered Email Registration Attempt
+    // TC-09-003: Already Registered Email Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 
@@ -133,7 +133,7 @@ async function ts09() {
 
     await browserTab.close();
 
-    // TS-09-004: Empty Email Registration Attempt
+    // TC-09-004: Empty Email Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 

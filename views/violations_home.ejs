@@ -25,6 +25,21 @@
 </div>
 
 <div>
+    <form action="http://localhost:3000/violations_home" method="post">
+        <input type="radio" id="filter" name="filter" value="Mask">
+        <label for="filter">Type: Mask</label><br>
+        <input type="radio" id="filter" name="filter" value="Fever">
+        <label for="filter">Type: Fever</label><br>
+        <input type="radio" id="filter" name="filter" value="Burke">
+        <label for="filter">Location: Burke</label><br>
+        <input type="radio" id="filter" name="filter" value="AMIC">
+        <label for="filter">Location: AMIC</label><br>
+        <input type="radio" id="filter" name="filter" value="Library">
+        <label for="filter">Location: Library</label><br>
+        <input type="radio" id="filter" name="filter" value="Nick">
+        <label for="filter">Location: Nick</label><br>
+        <button id="filterButton" type="submit">Filter</button>
+    </form>
     <p class="noticeText">Showing All <%= vioNum %> Captured Violations</p>
 </div>
 

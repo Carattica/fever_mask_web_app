@@ -13,7 +13,7 @@ var email = 'tester2@psu.edu';
 var password = 'Testing11!';
 
 async function ts11() {
-    // TS-11-001: Empty Name Registration Attempt
+    // TC-11-001: Empty Name Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 

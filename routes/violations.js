@@ -9,6 +9,25 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access', {status: '', users: ''}));
 
+router.post('/violations_home', (req, res) => {
+    const filter = req.body['filter'];
+    var search;
+    if (filter === 'Mask' || filter === 'Fever') search = {'violationType': filter};
+    else if (filter === undefined) search = {};
+    else search = {'location': filter};
+
+    Violation.find(search).sort({'date': -1}).sort({'time': -1}).then(violation => {
+        if (violation) {
+            console.log(`> ${violation.length} VIOLATIONS FOUND`);
+            res.render('violations_home', {vios: violation, vioNum: violation.length});
+        }
+        else {
+            console.log('Error fetching violations from Violations Database.');
+            res.redirect('/violations_home');
+        }
+    });
+});
+
 // get all violations and sort by date, time
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {

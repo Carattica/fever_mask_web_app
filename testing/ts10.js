@@ -13,7 +13,7 @@ var name = 'John Doe';
 var email = 'tester2@psu.edu';
 
 async function ts10() {
-    // TS-10-001:  Mismatching Passwords Registration Attempt
+    // TC-10-001:  Mismatching Passwords Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 
@@ -53,7 +53,7 @@ async function ts10() {
 
     await browserTab.close();
 
-    // TS-10-002: No Captial Letter, Number, or Symbol Password Registration Attempt
+    // TC-10-002: No Captial Letter, Number, or Symbol Password Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 
@@ -93,7 +93,7 @@ async function ts10() {
 
     await browserTab.close();
 
-    // TS-10-003: Passwords Less Than 8 Characters Registration Attempt
+    // TC-10-003: Passwords Less Than 8 Characters Registration Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 

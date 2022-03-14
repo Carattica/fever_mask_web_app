@@ -14,7 +14,7 @@ var email = 'tester@psu.edu';
 var password = 'Testing11!';
 
 async function ts12() {
-    // TS-12-001: Unregistered Email Login Attempt
+    // TC-12-001: Unregistered Email Login Attempt
     await browserTab.get(LOGIN_URL);
 
     var emailInput = await browserTab.findElement(selenium.By.id('emailInput'));
@@ -42,7 +42,7 @@ async function ts12() {
 
     await browserTab.close();
 
-    // TS-12-002: Empty Email Login Attempt
+    // TC-12-002: Empty Email Login Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 
@@ -71,7 +71,7 @@ async function ts12() {
 
     await browserTab.close();
 
-    // TS-12-003: Invalid Password Login Attempt
+    // TC-12-003: Invalid Password Login Attempt
     browserTab = await browser.forBrowser('chrome').build();
     await browserTab.get(LOGIN_URL);
 

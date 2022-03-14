@@ -145,3 +145,8 @@ body, html {
     display: grid;
     width: 50%;
   }
+
+  .header {
+    display: grid;
+    grid-auto-rows: auto;
+  }
