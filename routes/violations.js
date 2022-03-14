@@ -19,7 +19,8 @@ router.post('/violations_home', (req, res) => {
     Violation.find(search).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
-            res.render('violations_home', {vios: violation, vioNum: violation.length});
+            var filterMsg = 'Showing ' + violation.length + ' Violations for Filter: ' + filter;
+            res.render('violations_home', {vios: violation, vioMsg: filterMsg});
         }
         else {
             console.log('Error fetching violations from Violations Database.');
@@ -34,7 +35,8 @@ router.get('/violations_home', ensureAuthenticated, (req, res) => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
-            res.render('violations_home', {vios: violation, vioNum: violation.length});
+            var filterMsg = 'Showing All ' + violation.length +  ' Captured Violations'
+            res.render('violations_home', {vios: violation, vioMsg: filterMsg});
         }
         else {
             console.log('Error fetching violations from Violations Database.');
@@ -71,7 +73,7 @@ router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
         lowerLimit.setDate(lowerLimit.getDate() - (7 + today.getDay()));
     }
 
-    console.log(`> Loading Weekly Report For: ${dateToString(lowerLimit)} to ${dateToString(dayBefore)}`);
+    console.log(`> Loading Weekly Report for: ${dateToString(lowerLimit)} to ${dateToString(dayBefore)}`);
 
     // on Sunday, get report from previous Sunday to Saturday (yesterday) !!!!below as if it was sunday the 13th!!!!
     Violation.find({'date': {$gte: dateToString(lowerLimit), $lt: dateToString(upperLimit)}}).sort({'date': 1}).sort({'time': 1}).then(violation => {

@@ -40,8 +40,8 @@
         <label for="filter">Location: Nick</label><br>
         <button id="filterButton" type="submit">Filter</button>
     </form>
-    <p class="noticeText">Showing All <%= vioNum %> Captured Violations</p>
-</div>
+    <p class="noticeText"><%= vioMsg %></p>
+</div>  
 
 <script>
     function myFunction(time, date, loc, type, img) {
@@ -51,7 +51,7 @@
     }
 </script>
 
-<div class="Content">
+<div>
     <div class="Wrapper">
       <div class="RightContent">
         <p id="vioInfo">Click a button to see more information about a specific violation.</p>
@@ -59,7 +59,7 @@
       </div>
       <div class="LeftContent">
         <% for (var i in vios) { %>
-            <button type="button" class="btn" onclick="return myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
+            <button type="button" class="btn" onclick="myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
         <% } %>
       </div>
     </div>

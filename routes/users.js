@@ -38,7 +38,7 @@ router.get('/control_access', ensureAuthenticated, (req, res) => {
         if (user) {
             var usrRole;
             if (user.role === 'Developer') {
-                usrRole = 'Displaying All Users Who Have Registered For System Access';
+                usrRole = 'Displaying All Users Who Have Registered for System Access';
                 User.find({role: 'Undetermined'}).then(reqUsers => {
                     res.render('control_access', {status: usrRole, users: reqUsers});
                 });
