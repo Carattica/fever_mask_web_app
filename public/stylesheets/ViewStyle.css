@@ -134,18 +134,22 @@ input[type=text], input[type=password] {
 .Wrapper {
     position: absolute;
     width: 100%;
-    height: 60%;
+    height: 75%;
 }
   
 .Wrapper>div {
-    height: 100%;
+    height: 90%;
+    margin: 5px;
 }
 
 .LeftContent {
     background-color: white;
     overflow: auto;
-    border-style: solid;
-    border-color: #041E42;
+    border: 10px solid #041E42;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px 0px 0px 25px;
 }
 
 .RightContent {
@@ -154,8 +158,8 @@ input[type=text], input[type=password] {
     margin-left: 10px;
     width: 50%;
     text-align: center;
-    border-style: solid;
-    border-color: #041E42;
+    border: 10px solid #041E42;
+    border-radius: 0px 25px 25px 0px;
 }
 
 body, html { 
@@ -164,19 +168,33 @@ body, html {
 }
 
 .btn {
-    background-color: #eee;
-    color: #444;
+    background-color: #CCC;
+    color: black;
+    font-family: Roboto-Slab, serif;
     cursor: pointer;
     text-align: center;
-    font-size: 15px;
+    font-size: 16px;
     padding: 40px;
     margin: 10px;
     grid-auto-rows: auto;
     display: grid;
     width: 50%;
-  }
+    border: none;
+}
 
-  .header {
+.btn:hover, .btn:focus {
+    background-color: #A1A1A1;
+}
+
+.header {
     display: grid;
     grid-auto-rows: auto;
-  }
+}
+
+
+/* dropdown menu */
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    margin: 10px;
+}

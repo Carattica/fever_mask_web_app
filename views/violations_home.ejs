@@ -24,27 +24,27 @@
     </section>
 </div>
 
-<div>
-    <form action="http://localhost:3000/violations_home" method="post">
-        <input type="radio" id="filter" name="filter" value="Mask">
-        <label for="filter">Type: Mask</label><br>
-        <input type="radio" id="filter" name="filter" value="Fever">
-        <label for="filter">Type: Fever</label><br>
-        <input type="radio" id="filter" name="filter" value="Burke">
-        <label for="filter">Location: Burke</label><br>
-        <input type="radio" id="filter" name="filter" value="AMIC">
-        <label for="filter">Location: AMIC</label><br>
-        <input type="radio" id="filter" name="filter" value="Library">
-        <label for="filter">Location: Library</label><br>
-        <input type="radio" id="filter" name="filter" value="Nick">
-        <label for="filter">Location: Nick</label><br>
-        <button id="filterButton" type="submit">Filter</button>
-    </form>
-    <p class="noticeText"><%= vioMsg %></p>
-</div>  
+<form action="http://localhost:3000/violations_home" method="post">
+    <select class="dropdown" name="filter" id="filter" onchange="this.form.submit()">
+        <option value="filter">Data Filter</option>
+        <option value="none">No Filter</option>
+        <optgroup label="Violation Type">
+            <option value="Mask">Mask</option>
+            <option value="Fever">Fever</option>
+        </optgroup>
+        <optgroup label="Location">
+            <option value="AMIC">AMIC</option>
+            <option value="Burke">Burke</option>
+            <option value="Library">Library</option>
+            <option value="Nick">Nick</option>
+        </optgroup>
+    </select> 
+</form>
+
+<p class="noticeText"><%= vioMsg %></p>
 
 <script>
-    function myFunction(time, date, loc, type, img) {
+    function showInfo(time, date, loc, type, img) {
         var infoStr = `${time} | ${date} | ${loc} | ${type}`;
         document.getElementById('vioInfo').innerHTML = infoStr;
         document.getElementById('vioImg').src = img;
@@ -59,7 +59,7 @@
       </div>
       <div class="LeftContent">
         <% for (var i in vios) { %>
-            <button type="button" class="btn" onclick="myFunction('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
+            <button type="button" class="btn" onclick="showInfo('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
         <% } %>
       </div>
     </div>

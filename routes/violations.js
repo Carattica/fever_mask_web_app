@@ -13,13 +13,14 @@ router.post('/violations_home', (req, res) => {
     const filter = req.body['filter'];
     var search;
     if (filter === 'Mask' || filter === 'Fever') search = {'violationType': filter};
-    else if (filter === undefined) search = {};
+    else if (filter === "none") search = {};
     else search = {'location': filter};
 
     Violation.find(search).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
-            var filterMsg = 'Showing ' + violation.length + ' Violations for Filter: ' + filter;
+            if (filter === "none") var filterMsg = 'Showing All ' + violation.length + ' Captured Violations';
+            else var filterMsg = 'Showing ' + violation.length + ' Violations for Filter: ' + filter;
             res.render('violations_home', {vios: violation, vioMsg: filterMsg});
         }
         else {
