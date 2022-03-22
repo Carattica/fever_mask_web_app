@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Violation = require('../models/Violation');
+const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 
 // routes to various pages in the web app
@@ -8,6 +9,22 @@ const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access', {status: '', users: ''}));
+
+router.post('/violations_home/delete', (req, res) => {
+    User.findOne({_id: req.session.passport.user}).then(user => {
+        if (user) {
+            if (user.role === 'Developer') {
+                console.log('Deleting: ', req.body.vioId);
+            }
+            else console.log('Not a Developer');
+        }
+        else {
+            console.log('Error fetching users from Users Database.');
+        }
+    });
+
+    res.redirect('/violations_home');
+});
 
 router.post('/violations_home', (req, res) => {
     const filter = req.body['filter'];
