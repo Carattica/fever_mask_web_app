@@ -30,7 +30,7 @@
 
 <script>
     function myFunction(time, date, loc, type, img) {
-        var infoStr = `${time} | ${date} | ${loc} | ${type}`;
+        var infoStr = `Time: ${time}<br>Date: ${date}<br>Location: ${loc}<br>Type: ${type}`;
         document.getElementById('vioInfo').innerHTML = infoStr;
         document.getElementById('vioImg').src = img;
     }

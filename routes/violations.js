@@ -34,7 +34,6 @@ router.post('/violations_home', (req, res) => {
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
-            // get this loop to EJS side to display in HTML list
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
             var filterMsg = 'Showing All ' + violation.length +  ' Captured Violations'
             res.render('violations_home', {vios: violation, vioMsg: filterMsg});
