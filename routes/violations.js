@@ -14,9 +14,10 @@ router.post('/violations_home/delete', (req, res) => {
     User.findOne({_id: req.session.passport.user}).then(user => {
         if (user) {
             if (user.role === 'Developer') {
-                console.log('Deleting: ', req.body.vioId);
+                Violation.findOneAndDelete({_id: req.body.vioId}) .then(() => {
+                    console.log(`> Successfully deleted violation record: ${req.body.vioId}`);
+                });
             }
-            else console.log('Not a Developer');
         }
         else {
             console.log('Error fetching users from Users Database.');

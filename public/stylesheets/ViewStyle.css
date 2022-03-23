@@ -188,6 +188,14 @@ body, html {
     overflow-y: hidden;
 }
 
+.deleteBtn {
+    transition-delay: 0ms;
+}
+
+.deleteBtn:hover {
+    color: red;
+}
+
 .btn {
     background-color: #CCC;
     color: black;
