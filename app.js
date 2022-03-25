@@ -7,9 +7,9 @@ var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
 
-var app = express();
+var app = express();  // create express object
 
-// passport config
+// passport config for authentication
 require('./config/passport')(passport);
 
 // view engine setup
@@ -30,9 +30,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // integrating the router files and sending paths
-app.use('/', require('./routes/index.js'));
-app.use('/', require('./routes/users.js'));
-app.use('/', require('./routes/violations.js'));
+// these will handle all main fucntionality of the app
+app.use('/', require('./routes/index.js'));  // redirects to login page
+app.use('/', require('./routes/users.js'));  // all user-related actions
+app.use('/', require('./routes/violations.js'));  // all violation db related actions
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -32,7 +32,7 @@ if (weeklyReportTime.getDay() == 0 && weeklyReportTime.getHours() == 20) {
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login', {error: ''}));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 
-// displays current users awaiting access
+// GET: displays all current users awaiting access
 router.get('/control_access', ensureAuthenticated, (req, res) => {
     User.findOne({_id: req.session.passport.user}).then(user => {
         if (user) {
@@ -56,7 +56,7 @@ router.get('/control_access', ensureAuthenticated, (req, res) => {
     });
 });
 
-// handles what happens after developer changes user access role
+// POST: handles what happens after developer changes user access role
 router.post('/control_access', (req, res) => {
     const email = Object.keys(req.body).toString();
     const role = req.body[email];
@@ -77,7 +77,7 @@ router.post('/control_access', (req, res) => {
     res.redirect('/control_access');
 });
 
-// user registration
+// POST: user registration
 router.post('/register', (req, res) => {
     const {name, email, password, password2} = req.body;
 
@@ -139,8 +139,7 @@ router.post('/register', (req, res) => {
     }
 });
 
-// successful login takes user to violations
-// failed login keeps user at login page
+// POST: successful login takes user to violations, failed login keeps user at login page
 router.post('/login', (req, res, next) => {
     User.findOne({email: req.body.email}).then(user => {
         if (user) {
@@ -158,7 +157,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
-// log the user out and return to login page
+// GET: log the user out and return to login page
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');

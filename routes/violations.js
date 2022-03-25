@@ -10,7 +10,9 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register', {error: ''}));
 router.get('/control_access', ensureAuthenticated, (req, res) => res.render('control_access', {status: '', users: ''}));
 
+// POST: developer deleting a violation from the database
 router.post('/violations_home/delete', (req, res) => {
+    // find current user's role
     User.findOne({_id: req.session.passport.user}).then(user => {
         if (user) {
             if (user.role === 'Developer') {
@@ -27,13 +29,16 @@ router.post('/violations_home/delete', (req, res) => {
     res.redirect('/violations_home');
 });
 
+// POST: filtering the data based on filter dropdown selection
 router.post('/violations_home', (req, res) => {
+    // get the selected filter from the client
     const filter = req.body['filter'];
     var search;
     if (filter === 'Mask' || filter === 'Fever') search = {'violationType': filter};
     else if (filter === "none") search = {};
     else search = {'location': filter};
 
+    // find and filter violations based on the filter
     Violation.find(search).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
@@ -48,7 +53,7 @@ router.post('/violations_home', (req, res) => {
     });
 });
 
-// get all violations and sort by date, time
+// GET: get all violations and sort by date, then time
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
@@ -63,6 +68,7 @@ router.get('/violations_home', ensureAuthenticated, (req, res) => {
     });
 });
 
+// function to convert a DateTime to a String
 function dateToString(date) {
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -70,6 +76,7 @@ function dateToString(date) {
     return mm + '-' + dd + '-' + yyyy;
 }
 
+// GET: calculating wekly timeframe and loading the weekly report
 router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
     var today = new Date();
 
