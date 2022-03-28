@@ -12,19 +12,23 @@ router.get('/control_access', ensureAuthenticated, (req, res) => res.render('con
 
 // POST: developer deleting a violation from the database
 router.post('/violations_home/delete', (req, res) => {
-    // find current user's role
-    User.findOne({_id: req.session.passport.user}).then(user => {
-        if (user) {
-            if (user.role === 'Developer') {
-                Violation.findOneAndDelete({_id: req.body.vioId}) .then(() => {
-                    console.log(`> Successfully deleted violation record: ${req.body.vioId}`);
-                });
+    // 'null' if a user cancels the deletion action
+    // not 'null' if a user confirms the deletion action
+    if (req.body.vioId != 'null') {
+        // find current user's role
+        User.findOne({_id: req.session.passport.user}).then(user => {
+            if (user) {
+                if (user.role === 'Developer') {
+                    Violation.findOneAndDelete({_id: req.body.vioId}) .then(() => {
+                        console.log(`> Successfully deleted violation record: ${req.body.vioId}`);
+                    });
+                }
             }
-        }
-        else {
-            console.log('Error fetching users from Users Database.');
-        }
-    });
+            else {
+                console.log('Error fetching users from Users Database.');
+            }
+        });
+    }
 
     res.redirect('/violations_home');
 });

@@ -52,13 +52,24 @@
     }
 </script>
 
+<script>
+    function confirmPopup() {
+        // if the user cancels the popup, change the value to 'null'
+        // 'null' will be sent in the post request, and the backend will ignore the deletion
+        // if deletion is confirmed, the ObjectId will be perserved and sent
+        if (confirm("Are you sure you want to delete this record?") == false) {
+            document.getElementById('deleteButton').value = 'null';
+        }
+    }
+</script>
+
 <div>
     <div class="Wrapper">
       <div class="RightContent">
         <p id="vioInfo">Click a button to see more information about a specific violation.</p> 
         <img id="vioImg" alt="An image of the violator will be displayed as well.">
         <form action="http://localhost:3000/violations_home/delete" method="post">
-            <button class="deleteBtn" title="Only Developers May Delete Data" id="deleteButton" name="vioId" type="submit">Delete Record</button> 
+            <button onclick="confirmPopup()" class="deleteBtn" title="Only Developers May Delete Data" id="deleteButton" name="vioId" type="submit">Delete Record</button> 
         </form> 
       </div>
       <div class="LeftContent">
