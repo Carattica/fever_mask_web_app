@@ -9,9 +9,10 @@ const { findByIdAndUpdate, findOneAndDelete } = require('../models/User');
 
 // check if it is time to send the Weekly Report
 // Sunday 8:00 PM
-var weeklyReportTime = new Date();
-if (weeklyReportTime.getDay() == 0 && weeklyReportTime.getHours() == 20) {
-    console.log('> Sending the Weekly Report email notifications...');
+function weeklyReportTimer() {
+    var time = new Date();
+    if (time.getDay() == 0 && time.getHours() == 20 && time.getMinutes() == 00 && time.getSeconds() == 00) {
+        console.log('> Sending the Weekly Report email notifications...');
     User.find({}).then(user => {
         if (user) {
             var allEmails = '';
@@ -25,7 +26,11 @@ if (weeklyReportTime.getDay() == 0 && weeklyReportTime.getHours() == 20) {
             console.log('Error fetching users from Users Database.');
         }
     });
+    }
 }
+
+setInterval(weeklyReportTimer, 1000);
+// TESTED (PASS): 3-28-2022, 10:16 AM
 
 // routes to various pages in the web app
 // makes sure user is authenticated with each request before redirecting
