@@ -1,6 +1,9 @@
 /* generic styling for all pages */
 body {
-    font-family: Roboto-Slab, serif;
+    /* font-family: Roboto-Slab, serif; */
+    font-family: Roboto,"Franklin Gothic Medium",Tahoma,sans-serif;
+    font-weight: lighter !important;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
 }
 
@@ -11,7 +14,7 @@ body {
 
 .PSU {
     padding: 20px;
-    background: #041E42;
+    background-image: linear-gradient(to right, #041E42 , #083676);
     color: white;
 }
 
@@ -26,7 +29,10 @@ body {
 #pageText {
     font-size: 30px;
     color: #041E42;
-    font-family: Roboto-Slab, serif;
+    /* font-family: Roboto-Slab, serif; */
+    font-family: Roboto,"Franklin Gothic Medium",Tahoma,sans-serif;
+    font-weight: lighter !important;
+    -moz-osx-font-smoothing: grayscale;
     text-align: center;
     padding: 20px;
 }
@@ -82,16 +88,19 @@ input[type=text], input[type=password] {
 .nav_menu {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    background-color: #041E42;
+    background-image: linear-gradient(to right, #041E42 , #083676);
     text-decoration: none;
     padding: 12px;
 }
 
 .nav_menu a {
     display: block;
-    font-family: Roboto-Slab, serif;
-    background-color: #041E42;
-    color: white;
+    /* font-family: Roboto-Slab, serif; */
+    font-family: Roboto,"Franklin Gothic Medium",Tahoma,sans-serif;
+    font-weight: lighter !important;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: white;
+    color: darkgray;
     text-align: center;
     padding: 8px;
     font-size: large;
@@ -100,7 +109,7 @@ input[type=text], input[type=password] {
 
 .nav_menu a:hover {
     background-color: white;
-    color: darkgrey;
+    color: #041E42;
     transition-duration: 0.2s
 }
 
@@ -118,7 +127,10 @@ input[type=text], input[type=password] {
 .noticeText {
     font-size: 20px;
     color: #041E42;
-    font-family: Roboto-Slab, serif;
+    /* font-family: Roboto-Slab, serif; */
+    font-family: Roboto,"Franklin Gothic Medium",Tahoma,sans-serif;
+    font-weight: lighter !important;
+    -moz-osx-font-smoothing: grayscale;
     text-align: center;
     padding: 5px;
 }
@@ -152,6 +164,7 @@ input[type=text], input[type=password] {
     border-radius: 25px;
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19);
 }
 
 .LeftContent::-webkit-scrollbar {
@@ -165,14 +178,15 @@ input[type=text], input[type=password] {
     text-align: center;
     border: 10px solid #041E42;
     border-radius: 25px;
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19);
 }
 
 .RightContent>p {
-    border: 2px solid #041E42;
+    border: 2px solid white;
     border-radius: 10px;
     margin: 5px;
     padding: 10px;
-    background: #041E42;
+    background-image: linear-gradient(to right, #041E42 , #083676);
     color: white;
 }
 
@@ -197,9 +211,12 @@ body, html {
 }
 
 .btn {
-    background-color: #CCC;
-    color: black;
-    font-family: Roboto-Slab, serif;
+    background-color: lightgray;
+    color: darkgray;
+    /* font-family: Roboto-Slab, serif; */
+    font-family: Roboto,"Franklin Gothic Medium",Tahoma,sans-serif;
+    font-weight: lighter !important;
+    -moz-osx-font-smoothing: grayscale;
     cursor: pointer;
     text-align: center;
     font-size: 16px;
@@ -210,10 +227,13 @@ body, html {
     width: 50%;
     border: none;
     border-radius: 10px;
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19);
 }
 
 .btn:hover, .btn:focus {
-    background-color: #A1A1A1;
+    /* background-color: #275da4; */
+    background-image: linear-gradient(to right, #225392 , #225392);;
+    color: white;
 }
 
 .header {
