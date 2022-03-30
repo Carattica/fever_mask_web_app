@@ -5,6 +5,7 @@ var browser = new selenium.Builder();
 var browserTab = browser.forBrowser('chrome').build();
 
 const LOGIN_URL = 'http://localhost:3000/login';
+const REG_URL = 'http://localhost:3000/register';
 const VIO_URL = 'http://localhost:3000/violations_home';
 
 var testsPassed = 0;
@@ -100,7 +101,58 @@ async function ts12() {
 
     await browserTab.close();
 
-    console.log(`[TS-12] (REPORT): ${testsPassed}/3 passed.`);
+    // TC-12-004: Undetermined Role Login Attempt 
+    // registration step
+    browserTab = await browser.forBrowser('chrome').build();
+    await browserTab.get(LOGIN_URL);
+
+    registerLink = await browserTab.findElement(selenium.By.linkText('Create Account'));
+    await registerLink.click();
+
+    nameInput = await browserTab.findElement(selenium.By.id('nameInput'));
+    await nameInput.sendKeys('Abc');
+
+    emailInput = await browserTab.findElement(selenium.By.id('emailInput'));
+    await emailInput.sendKeys('abc@psu.edu');
+
+    password1Input = await browserTab.findElement(selenium.By.id('password1Input'));
+    await password1Input.sendKeys('Testing11!');
+
+    password2Input = await browserTab.findElement(selenium.By.id('password2Input'));
+    await password2Input.sendKeys('Testing11!');
+
+    var registerButton = await browserTab.findElement(selenium.By.id('registerButton'));
+    await registerButton.click();
+
+    // login step
+    emailInput = await browserTab.findElement(selenium.By.id('emailInput'));
+    await emailInput.sendKeys('abc@psu.edu');
+
+    passwordInput = await browserTab.findElement(selenium.By.id('passwordInput'));
+    await passwordInput.sendKeys('Testing11!');
+
+    loginButton = await browserTab.findElement(selenium.By.id('loginButton'));
+    await loginButton.click();
+
+    await browserTab.switchTo().alert().accept();  // accept the alert notice
+
+    currentUrl = await browserTab.getCurrentUrl();
+    if (currentUrl === LOGIN_URL) {
+        console.log('[TC-12-004] (PASS): Undetermined role login blocked.');  // Wednesday, March 2, 9:56 AM
+        testsPassed += 1;
+    }
+    else if (currentUrl === VIO_URL) {
+        console.log('[TC-12-004] (FAIL): Undetermined role login allowed.');
+        return;
+    }
+    else {
+        console.log('[TC-12-004] (FAIL): Nothing resolved.');
+        return;
+    }
+
+    console.log(`[TS-12] (REPORT): ${testsPassed}/4 passed.`);
+
+    await browserTab.close();
 }
 
 ts12();
