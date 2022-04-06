@@ -224,10 +224,10 @@ body, html {
     margin: 10px;
     grid-auto-rows: auto;
     display: grid;
-    width: 50%;
+    width: 98%;
     border: none;
     border-radius: 10px;
-    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19);
+    /* box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19); */
 }
 
 .btn:hover, .btn:focus {

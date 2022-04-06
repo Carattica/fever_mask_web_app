@@ -74,7 +74,7 @@
       </div>
       <div class="LeftContent">
         <% for (var i in vios) { %>
-            <button type="button" class="btn" onclick="showInfo('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>', '<%= vios[i]._id %>')"><%= vios[i].time %> | <%= vios[i].date %></button>
+            <button type="button" class="btn" onclick="showInfo('<%= vios[i].time %>', '<%= vios[i].date %>', '<%= vios[i].location %>', '<%= vios[i].violationType %>', '<%= vios[i].imageUrl %>', '<%= vios[i]._id %>')"><%= vios[i].date %> at <%= vios[i].time %></button>
         <% } %>
       </div>
     </div>
