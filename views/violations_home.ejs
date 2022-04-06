@@ -32,11 +32,10 @@
             <option value="Mask">Mask</option>
             <option value="Fever">Fever</option>
         </optgroup>
-        <optgroup label="Location">
-            <option value="AMIC">AMIC</option>
-            <option value="Burke">Burke</option>
-            <option value="Library">Library</option>
-            <option value="Nick">Nick</option>
+        <optgroup label="Building">
+            <% for (var i in filter) { %>
+                <option value="<%= filter[i] %>"><%= filter[i] %></option>
+            <% } %>
         </optgroup>
     </select> 
 </form>

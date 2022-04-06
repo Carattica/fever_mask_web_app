@@ -4,6 +4,30 @@ const Violation = require('../models/Violation');
 const User = require('../models/User');
 const {forwardAuthenticated, ensureAuthenticated} = require('../config/auth');
 
+// function to convert a DateTime to a String
+function dateToString(date) {
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    return mm + '-' + dd + '-' + yyyy;
+}
+
+// function to get all building locations from db to send to filter
+function getLocations() {
+    var locations = [];
+    Violation.find({}).then(violation => {
+        if (violation) {
+            for (var v in violation) {
+                if (locations.indexOf(violation[v].location) === -1) {
+                    locations.push(violation[v].location);
+                }
+            }
+        }
+        else console.log('Error fetching violations from Violations DB');
+    });
+    return locations;
+}
+
 // routes to various pages in the web app
 // makes sure user is authenticated with each request before redirecting
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
@@ -42,13 +66,15 @@ router.post('/violations_home', (req, res) => {
     else if (filter === "none") search = {};
     else search = {'location': filter};
 
+    const locFilter = getLocations();
+
     // find and filter violations based on the filter
     Violation.find(search).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
             if (filter === "none") var filterMsg = 'Showing All ' + violation.length + ' Captured Violations';
             else var filterMsg = 'Showing ' + violation.length + ' Violations for Filter: ' + filter;
-            res.render('violations_home', {vios: violation, vioMsg: filterMsg});
+            res.render('violations_home', {vios: violation, vioMsg: filterMsg, filter: locFilter});
         }
         else {
             console.log('Error fetching violations from Violations Database.');
@@ -59,11 +85,12 @@ router.post('/violations_home', (req, res) => {
 
 // GET: get all violations and sort by date, then time
 router.get('/violations_home', ensureAuthenticated, (req, res) => {
+    const locFilter = getLocations();
     Violation.find({}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
             var filterMsg = 'Showing All ' + violation.length +  ' Captured Violations'
-            res.render('violations_home', {vios: violation, vioMsg: filterMsg});
+            res.render('violations_home', {vios: violation, vioMsg: filterMsg, filter: locFilter});
         }
         else {
             console.log('Error fetching violations from Violations Database.');
@@ -71,14 +98,6 @@ router.get('/violations_home', ensureAuthenticated, (req, res) => {
         }
     });
 });
-
-// function to convert a DateTime to a String
-function dateToString(date) {
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = date.getFullYear();
-    return mm + '-' + dd + '-' + yyyy;
-}
 
 // GET: calculating wekly timeframe and loading the weekly report
 router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
