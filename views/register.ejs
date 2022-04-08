@@ -15,29 +15,30 @@
 </div>
 
 <div class="InfoBox">
+    <h3 id="infoText">Please Enter Name, PSU Email and Password</h3>
     <div class="UserInfo">
         <form action="http://localhost:3000/register" method="post">
-            <label id="name"><b>Name</b></label><br>
+            <label id="name"></label><br>
             <label>
                 <input id="nameInput" type="text" autocomplete="off" placeholder="Enter Name" name="name" required>
             </label><br>
 
-            <label id="email"><b>Email</b></label><br>
+            <label id="email"></label><br>
             <label>
                 <input id="emailInput" type="text" autocomplete="off" placeholder="Enter Email" name="email" required>
             </label><br>
 
-            <label id="password"><b>Password</b></label><br>
+            <label id="password"></label><br>
             <label>
                 <input id="password1Input" type="password" placeholder="Enter Password" name="password" required>
             </label><br>
 
-            <label id="password2"><b>Retype Password</b></label><br>
+            <label id="password2"></label><br>
             <label>
                 <input id="password2Input" type="password" placeholder="Re-Enter Password" name="password2" required>
             </label><br>
 
-            <button id="registerButton" type="Enter">Register</button>
+            <button class="loginButton" id="registerButton" type="Enter">Register</button>
         </form>
     </div>
     <br>
