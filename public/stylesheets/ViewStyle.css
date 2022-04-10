@@ -247,6 +247,7 @@ body, html {
     /* background-color: #275da4; */
     background-image: linear-gradient(to right, #225392 , #225392);;
     color: white;
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.2), 0 2px 9px 0 rgba(0,0,0,0.19);
 }
 
 .header {
@@ -260,4 +261,6 @@ body, html {
     position: absolute;
     display: inline-block;
     margin: 10px;
+    border-radius: 5px;
+    border: 2px solid #000;
 }
