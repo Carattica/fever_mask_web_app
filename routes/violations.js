@@ -123,8 +123,8 @@ router.get('/violations_weekly', ensureAuthenticated, (req, res) => {
 
     console.log(`> Loading Weekly Report for: ${dateToString(lowerLimit)} to ${dateToString(dayBefore)}`);
 
-    // on Sunday, get report from previous Sunday to Saturday (yesterday) !!!!below as if it was sunday the 13th!!!!
-    Violation.find({'date': {$gte: dateToString(lowerLimit), $lt: dateToString(upperLimit)}}).sort({'date': 1}).sort({'time': 1}).then(violation => {
+    // on Sunday, get report from previous Sunday to Saturday
+    Violation.find({'date': {$gte: dateToString(lowerLimit), $lt: dateToString(upperLimit)}}).sort({'date': -1}).sort({'time': -1}).then(violation => {
         if (violation) {
             // get this loop to EJS side to display in HTML list
             console.log(`> ${violation.length} VIOLATIONS FOUND`);
