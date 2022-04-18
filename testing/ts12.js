@@ -29,7 +29,7 @@ async function ts12() {
 
     var currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-12-001] (PASS): Unregistered email login blocked.');  // Wednesday, March 2, 9:56 AM
+        console.log('[TC-12-001] (PASS): Unregistered email login blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === VIO_URL) {
@@ -58,7 +58,7 @@ async function ts12() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-12-002] (PASS): Empty email login blocked.');  // Wednesday, March 2, 9:56 AM
+        console.log('[TC-12-002] (PASS): Empty email login blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === VIO_URL) {
@@ -87,7 +87,7 @@ async function ts12() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-12-003] (PASS): Invalid password login blocked.');  // Wednesday, March 2, 9:56 AM
+        console.log('[TC-12-003] (PASS): Invalid password login blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === VIO_URL) {
@@ -138,7 +138,7 @@ async function ts12() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-12-004] (PASS): Undetermined role login blocked.');  // Wednesday, March 2, 9:56 AM
+        console.log('[TC-12-004] (PASS): Undetermined role login blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === VIO_URL) {
@@ -150,9 +150,38 @@ async function ts12() {
         return;
     }
 
-    console.log(`[TS-12] (REPORT): ${testsPassed}/4 passed.`);
+    await browserTab.close();
+
+    // TC-12-005: Valid Login Attempt Allowed
+    browserTab = await browser.forBrowser('chrome').build();
+    await browserTab.get(LOGIN_URL);
+
+    var emailInput = await browserTab.findElement(selenium.By.id('emailInput'));
+    await emailInput.sendKeys(email);
+
+    var passwordInput = await browserTab.findElement(selenium.By.id('passwordInput'));
+    await passwordInput.sendKeys(password);
+
+    var loginButton = await browserTab.findElement(selenium.By.id('loginButton'));
+    await loginButton.click();
+
+    var currentUrl = await browserTab.getCurrentUrl();
+    if (currentUrl === VIO_URL) {
+        console.log('[TC-12-005] (PASS): Valid Login Allowed.');
+        testsPassed += 1;
+    }
+    else if (currentUrl === LOGIN_URL) {
+        console.log('[TC-12-005] (FAIL): Valid login not allowed.');
+        return;
+    }
+    else {
+        console.log('[TC-12-005] (FAIL): Nothing resolved.');
+        return;
+    }
 
     await browserTab.close();
+
+    console.log(`[TS-12] (REPORT): ${testsPassed}/5 passed.`);
 }
 
 ts12();

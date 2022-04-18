@@ -8,7 +8,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
-    "chromedriver": "^98.0.1",
+    "chromedriver": "^100.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
