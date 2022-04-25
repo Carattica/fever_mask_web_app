@@ -19,7 +19,7 @@ async function ts13() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-13-001] (PASS): Unauthorized violations_home access blocked.');  // Saturday, March 5, 7:23 PM
+        console.log('[TC-13-001] (PASS): Unauthorized violations_home access blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === LOGIN_URL) {
@@ -41,7 +41,7 @@ async function ts13() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-13-002] (PASS): Unauthorized violations_weekly access blocked.');  // Saturday, March 5, 7:23 PM
+        console.log('[TC-13-002] (PASS): Unauthorized violations_weekly access blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === LOGIN_URL) {
@@ -63,7 +63,7 @@ async function ts13() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-13-003] (PASS): Unauthorized control_access access blocked.');  // Saturday, March 5, 7:23 PM
+        console.log('[TC-13-003] (PASS): Unauthorized control_access access blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === LOGIN_URL) {

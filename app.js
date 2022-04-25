@@ -52,6 +52,3 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-
-// to run the app: npm start
-// MongoDB password: SeniorDesign11!

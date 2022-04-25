@@ -79,7 +79,7 @@ async function ts10() {
 
     currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === REG_URL) {
-        console.log('[TC-10-002] (PASS): Unmet password credentials registration blocked.');  // Saturday, March 5, 7:01 PM
+        console.log('[TC-10-002] (PASS): Unmet password credentials registration blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === REG_URL) {
@@ -119,7 +119,7 @@ async function ts10() {
 
     var currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === REG_URL) {
-        console.log('[TC-10-003] (PASS): Short password registration blocked.');  // Saturday, March 5, 7:01 PM
+        console.log('[TC-10-003] (PASS): Short password registration blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === REG_URL) {

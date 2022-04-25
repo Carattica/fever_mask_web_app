@@ -37,7 +37,7 @@ async function ts11() {
 
     var currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === REG_URL) {
-        console.log('[TC-11-001] (PASS): Empty name registration blocked.');  // Saturday, March 5, 7:16 PM
+        console.log('[TC-11-001] (PASS): Empty name registration blocked.');
         testsPassed += 1;
     }
     else if (currentUrl === REG_URL) {
@@ -75,7 +75,7 @@ async function ts11() {
 
     var currentUrl = await browserTab.getCurrentUrl();
     if (currentUrl === LOGIN_URL) {
-        console.log('[TC-11-002] (PASS): Valid registration allowed.');  // Saturday, March 5, 7:16 PM
+        console.log('[TC-11-002] (PASS): Valid registration allowed.');
         testsPassed += 1;
     }
     else if (currentUrl === REG_URL) {

@@ -1,0 +1,4 @@
+MongoDB Email: mtk29@psu.edu
+MongoDB Password: SeniorDesign11!
+
+MongoDB connection strings (USER_DB and VIOL_DB) found in .env file
